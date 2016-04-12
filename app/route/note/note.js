@@ -16,13 +16,16 @@ router.route('/')
     .post(function (req, res) {
       var note = req.body.note;
       var userId = req.user;
-      
+
       var newNote = new Note();
       newNote.userId = userId;
       newNote.title = note.title;
       newNote.description = note.description;
 
+      console.log(note);
+
       newNote.save(function (err) {
+        console.log(err);
         if (err) { return res.send(err); }
 
         res.end();
