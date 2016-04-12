@@ -1,28 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var configDb = require('../../db/db.config');
-var Note = configDb.Note;
+var Folder = configDb.Folder;
 
 router.route('/')
     .get(function (req, res) {
       var userId = req.user;
 
-      Note.find({ userId: userId }, function (err, notes) {
+      Folder.find({ userId: userId }, function (err, folders) {
         if (err) { return res.send(err); }
 
-        res.json(notes);
+        res.json(folders);
       });
     })
     .post(function (req, res) {
-      var note = req.body.note;
+      var folder = req.body.folder;
       var userId = req.user;
 
-      var newNote = new Note();
-      newNote.userId = userId;
-      newNote.title = note.title;
-      newNote.description = note.description;
+      var newFolder = new Folder();
+      newFolder.userId = userId;
+      newFolder.title = folder.title;
 
-      newNote.save(function (err) {
+      newFolder.save(function (err) {
         if (err) { return res.send(err); }
 
         res.end();
