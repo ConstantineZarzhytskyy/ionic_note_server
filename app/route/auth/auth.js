@@ -19,4 +19,18 @@ router.route('/login')
       });
     });
 
+router.route('/register')
+    .post(function (req, res) {
+      var user = req.body.user;
+      var newUser = new User();
+      newUser.email = user.email;
+      newUser.password = authUtils.createHash(user.password);
+
+      newUser.save(function (err, userDB) {
+        if (err) { return res.send(err); }
+
+        res.json(userDB);
+      });
+    });
+
 module.exports = router;
