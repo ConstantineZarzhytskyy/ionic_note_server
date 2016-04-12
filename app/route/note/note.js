@@ -5,11 +5,12 @@ var Note = configDb.Note;
 
 router.route('/')
     .get(function (req, res) {
+      var userId = req.user;
 
-      Note.find(function (err, tasks) {
+      Note.find({ userId: userId }, function (err, notes) {
         if (err) { return res.send(err); }
 
-        res.json(tasks);
+        res.json(notes);
       });
     });
 
