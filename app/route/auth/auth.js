@@ -3,6 +3,7 @@ var router = express.Router();
 var configDb = require('../../db/db.config');
 var authUtils = require('../../route/auth/authUtils');
 var User = configDb.User;
+var tokenUtils = require('../tokenUtils');
 
 router.route('/login')
     .post(function (req, res) {
@@ -15,7 +16,7 @@ router.route('/login')
           return res.status(401).send({ err: 'invalid user' });
         }
 
-        res.send(userDB);
+        res.send({ user: userDB, token: tokenUtils.createJWT(userDB._id) });
       });
     });
 
