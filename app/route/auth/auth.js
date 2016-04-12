@@ -34,4 +34,15 @@ router.route('/register')
       });
     });
 
+router.route('/user')
+    .get(function (req, res) {
+      var userId = req.user;
+
+      User.findOne({ userId: userId }, function (err, userDB) {
+        if (err) { return res.send(err); }
+
+        res.json(userDB);
+      });
+    });
+
 module.exports = router;
