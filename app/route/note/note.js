@@ -65,6 +65,8 @@ router.route('/:noteId')
         _id: noteId
       }, function (err) {
         if (err) { return res.send(err); }
+
+        res.end();
       });
     });
 
