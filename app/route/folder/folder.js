@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var configDb = require('../../db/db.config');
 var Folder = configDb.Folder;
+var Note = configDb.Note;
 
 router.route('/')
     .get(function (req, res) {
@@ -25,6 +26,17 @@ router.route('/')
         if (err) { return res.send(err); }
 
         res.end();
+      });
+    });
+
+router.route('/:folderId')
+    .get(function (req, res) {
+      var folderId = req.params.folderId;
+
+      Folder.findOne({ _id: folderId }, function (err, folder) {
+        if (err) { return res.send(err); }
+
+        res.json(folder);
       });
     });
 
