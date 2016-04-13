@@ -29,7 +29,7 @@ router.route('/')
       });
     });
 
-router.route('/:nodeId')
+router.route('/:noteId')
     .get(function (req, res) {
       var noteId = req.params.noteId;
 
