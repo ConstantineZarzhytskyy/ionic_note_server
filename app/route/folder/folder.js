@@ -38,6 +38,22 @@ router.route('/:folderId')
 
         res.json(folder);
       });
+    })
+    .put(function (req, res) {
+      var folderId = req.params.folderId;
+      var newFolder = req.body.folder;
+
+      Folder.update({
+        _id: folderId
+      }, {
+        $set: {
+          title: newFolder.title
+        }
+      }, function (err) {
+        if (err) { return res.send(err); }
+
+        res.end();
+      });
     });
 
 router.route('/:folderId/notes')
