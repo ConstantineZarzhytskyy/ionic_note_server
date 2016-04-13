@@ -1,4 +1,5 @@
 var express = require('express');
+var async = require('async');
 var router = express.Router();
 var configDb = require('../../db/db.config');
 var Folder = configDb.Folder;
@@ -54,6 +55,35 @@ router.route('/:folderId')
 
         res.end();
       });
+    })
+    .delete(function (req, res) {
+      var folderId= req.params.folderId;
+
+      async.parallel([
+        removeNotes,
+        removeFolder
+      ], function (err) {
+        if (err) { return res.send(err); }
+
+        res.json();
+      });
+
+      function removeNotes(done) {
+        Note.remove({ folderId: folderId }, function (err) {
+          if (err) { return done(err, null) }
+
+          done(null, null);
+        })
+      }
+
+      function removeFolder(done) {
+        Folder.remove({ _id: folderId }, function (err) {
+          if (err) { return done(err, null) }
+
+          done(null, null);
+        });
+      }
+
     });
 
 router.route('/:folderId/notes')
