@@ -19,7 +19,7 @@ router.route('/')
 
       var newNote = new Note();
       newNote.userId = userId;
-      newNote.fodlerId = note.folderId;
+      newNote.folderId = note.folderId;
       newNote.title = note.title;
       newNote.description = note.description;
 
