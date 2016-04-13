@@ -29,4 +29,15 @@ router.route('/')
       });
     });
 
+router.route('/:nodeId')
+    .get(function (req, res) {
+      var noteId = req.params.noteId;
+
+      Note.findOne({ _id: noteId }, function (err, note) {
+        if (err) { return res.send(err); }
+
+        res.json(note);
+      });
+    });
+
 module.exports = router;
