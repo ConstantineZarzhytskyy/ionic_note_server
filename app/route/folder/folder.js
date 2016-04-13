@@ -40,4 +40,15 @@ router.route('/:folderId')
       });
     });
 
+router.route('/:folderId/notes')
+    .get(function (req, res) {
+      var folderId = req.params.folderId;
+
+      Note.find({ folderId: folderId }, function (err, notes) {
+        if (err) { return res.send(err); }
+
+        res.json(notes);
+      });
+    });
+
 module.exports = router;
