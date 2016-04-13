@@ -57,6 +57,15 @@ router.route('/:noteId')
 
         res.end();
       });
+    })
+    .delete(function (req, res) {
+      var noteId = req.params.noteId;
+
+      Note.remove({
+        _id: noteId
+      }, function (err) {
+        if (err) { return res.send(err); }
+      });
     });
 
 module.exports = router;
