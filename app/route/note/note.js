@@ -51,6 +51,7 @@ router.route('/:noteId')
       }, {
         $set: {
           title: newNote.title,
+          done: newNote.done,
           description: newNote.description,
           folderId: newNote.folderId
         }
