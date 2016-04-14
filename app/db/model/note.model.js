@@ -6,7 +6,8 @@ var NoteSchema = new Schema({
   folderId: String,
   title: String,
   description: { type: String, dafault: '' },
-  dateCreate: String
+  dateCreate: String,
+  done: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Note', NoteSchema);
