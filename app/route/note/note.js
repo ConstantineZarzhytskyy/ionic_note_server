@@ -23,7 +23,7 @@ router.route('/')
       newNote.folderId = note.folderId;
       newNote.title = note.title;
       newNote.description = note.description;
-      newNote.dateCreate = dateCreate.getFullYear() + '-' + (dateCreate.getMonth() + 1) + '-' + dateCreate.getDate();
+      newNote.dateCreate = dateCreate.toUTCString();
 
       newNote.save(function (err) {
         if (err) { return res.send(err); }
