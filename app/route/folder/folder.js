@@ -31,7 +31,7 @@ router.route('/')
           Note.find({ userId: userId }, function (err, notes) {
             if (err) { return done(err, null); }
 
-            done(null, { folders: folders, notes: notes });
+            done(null, { folders: folders, notes: [ notes ] });
           })
       }
 
