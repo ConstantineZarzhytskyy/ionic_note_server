@@ -34,11 +34,31 @@ router.route('/:folderId')
     .get(function (req, res) {
       var folderId = req.params.folderId;
 
-      Folder.findOne({ _id: folderId }, function (err, folder) {
+      async.waterfall([
+          getFolder,
+          getNotes
+      ], function (err, done) {
         if (err) { return res.send(err); }
 
-        res.json(folder);
+        res.json(done);
       });
+
+      function getFolder(done) {
+        Folder.findOne({ _id: folderId }, function (err, folder) {
+          if (err) { return done(err, null); }
+
+          done(null, folder)
+        });
+      }
+
+      function getNotes(folder, done) {
+        Note.find({ folderId: folderId }, function (err, notes) {
+          if (err) { return done(err, null); }
+
+          done(null, notes)
+        })
+      }
+
     })
     .put(function (req, res) {
       var folderId = req.params.folderId;
