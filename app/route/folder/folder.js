@@ -31,20 +31,18 @@ router.route('/')
           Note.find({ userId: userId }, function (err, notes) {
             if (err) { return done(err, null); }
 
-            done(null, { folders: folders, notes: [ notes ] });
+            done(null, { folders: folders, notes: notes });
           })
       }
 
       function bindingFolderWithNotes(data, done) {
-        console.log('=======================');
-        console.log(data);
         var folders = data.folders;
         var notes = data.notes;
 
         for(var i in folders){
           for(var j in notes) {
-            if (notes[i].folderId === folders[i]._id) {
-              folders.notes = notes[j];
+            if (notes[j].folderId == folders[i]._id) {
+              folders[i].notes = notes[j];
             }
           }
         }
