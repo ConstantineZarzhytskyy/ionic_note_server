@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var NoteSchema = new Schema({
   userId: String,
   folderId: String,
+  markerId: String,
   title: String,
   description: { type: String, dafault: '' },
   dateCreate: String,

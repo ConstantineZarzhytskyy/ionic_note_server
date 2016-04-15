@@ -21,6 +21,7 @@ router.route('/')
       var newNote = new Note();
       newNote.userId = userId;
       newNote.folderId = note.folderId;
+      newNote.markerId = note.markerId;
       newNote.title = note.title;
       newNote.description = note.description;
       newNote.dateCreate = dateCreate.toUTCString();
@@ -53,7 +54,8 @@ router.route('/:noteId')
           title: newNote.title,
           done: newNote.done,
           description: newNote.description,
-          folderId: newNote.folderId
+          folderId: newNote.folderId,
+          markerId: newNote.markerId
         }
       }, function (err) {
         if (err) { return res.send(err); }
