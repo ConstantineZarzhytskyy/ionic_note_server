@@ -55,7 +55,8 @@ router.route('/:folderId')
         Note.find({ folderId: folderId }, function (err, notes) {
           if (err) { return done(err, null); }
 
-          done(null, { folder: folder, notes: notes })
+          folder.notes = notes;
+          done(null, folder)
         })
       }
 
