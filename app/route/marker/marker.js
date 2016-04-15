@@ -30,4 +30,34 @@ router.route('/')
       })
     });
 
+router.route('/:markerId')
+    .put(function (req, res) {
+      var userId = req.user;
+      var markerId = req.params.markerId;
+      var newMarker = req.body.marker;
+
+      Marker.update({ _id: markerId },
+          {
+            $set: {
+              title: newMarker.title,
+              userId: userId,
+              lat: newMarker.lat,
+              lng: newMarker.lng
+            }
+          }, function (err) {
+        if (err) { return res.send(err); }
+
+        res.end();
+      });
+    })
+    .delete(function (req, res) {
+      var markerId = req.params.markerId;
+
+      Marker.remove({ _id: markerId }, function (err) {
+        if (err) {  return res.send(err); }
+
+        res.end();
+      })
+    });
+
 module.exports = router;
