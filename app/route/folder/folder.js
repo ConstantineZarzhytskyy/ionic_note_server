@@ -36,6 +36,8 @@ router.route('/')
       }
 
       function bindingFolderWithNotes(data, done) {
+        console.log('=======================');
+        console.log(data);
         var folders = data.folders;
         var notes = data.notes;
 
