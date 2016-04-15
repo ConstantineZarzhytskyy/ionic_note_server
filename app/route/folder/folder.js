@@ -9,11 +9,47 @@ router.route('/')
     .get(function (req, res) {
       var userId = req.user;
 
-      Folder.find({ userId: userId }, function (err, folders) {
+      async.waterfall([
+        getFolders,
+        getNotes,
+        bindingFolderWithNotes
+      ], function (err, done) {
         if (err) { return res.send(err); }
 
-        res.json(folders);
+        res.json(done);
       });
+
+      function getFolders(done) {
+        Folder.find({ userId: userId }, function (err, folders) {
+          if (err) { return done(err, null); }
+
+          done(null, folders);
+        });
+      }
+
+      function getNotes(folders, done) {
+          Note.find({ userId: userId }, function (err, notes) {
+            if (err) { return done(err, null); }
+
+            done(null, { folders: folders, notes: notes });
+          })
+      }
+
+      function bindingFolderWithNotes(data, done) {
+        var folders = data.folders;
+        var notes = data.notes;
+
+        for(var i in folders){
+          for(var j in notes) {
+            if (notes[i].folderId === folders[i]._id) {
+              folders.notes = notes[j];
+            }
+          }
+        }
+
+        done(null, folders);
+      }
+
     })
     .post(function (req, res) {
       var folder = req.body.folder;
