@@ -8,7 +8,9 @@ var NoteSchema = new Schema({
   title: String,
   description: { type: String, dafault: '' },
   dateCreate: String,
-  done: { type: Boolean, default: false }
+  done: { type: Boolean, default: false },
+  dateNotification: String,
+  timeNotification: String
 });
 
 module.exports = mongoose.model('Note', NoteSchema);

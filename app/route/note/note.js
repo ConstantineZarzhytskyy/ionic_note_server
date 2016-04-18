@@ -25,6 +25,8 @@ router.route('/')
       newNote.title = note.title;
       newNote.description = note.description;
       newNote.dateCreate = dateCreate.toUTCString();
+      newNote.dateNotification = note.dateNotification;
+      newNote.timeNotification = note.timeNotification;
 
       newNote.save(function (err) {
         if (err) { return res.send(err); }
@@ -55,7 +57,9 @@ router.route('/:noteId')
           done: newNote.done,
           description: newNote.description,
           folderId: newNote.folderId,
-          markerId: newNote.markerId
+          markerId: newNote.markerId,
+          dateNotification: newNote.dateNotification,
+          timeNotification: newNote.timeNotification
         }
       }, function (err) {
         if (err) { return res.send(err); }
