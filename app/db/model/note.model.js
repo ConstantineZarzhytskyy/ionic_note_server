@@ -11,7 +11,7 @@ var NoteSchema = new Schema({
   done: { type: Boolean, default: false },
   dateNotification: String,
   timeNotification: String,
-  picture: { data: Buffer, contentType: String }
+  picture: String
 });
 
 module.exports = mongoose.model('Note', NoteSchema);
