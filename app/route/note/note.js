@@ -27,6 +27,8 @@ router.route('/')
       newNote.dateCreate = dateCreate.toUTCString();
       newNote.dateNotification = note.dateNotification;
       newNote.timeNotification = note.timeNotification;
+      newNote.picture.data = note.picture;
+      newNote.picture.contentType = 'image/png';
 
       newNote.save(function (err) {
         if (err) { return res.send(err); }
