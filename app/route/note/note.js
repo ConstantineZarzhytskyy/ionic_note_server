@@ -10,6 +10,9 @@ router.route('/')
       Note.find({ userId: userId }, function (err, notes) {
         if (err) { return res.send(err); }
 
+        for(var i in notes) {
+          delete notes[i].picture;
+        }
         res.json(notes);
       });
     })
