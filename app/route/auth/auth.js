@@ -9,7 +9,7 @@ router.route('/login')
     .post(function (req, res) {
       var user = req.body.user;
 
-      User.findOne({email: user.email}, function (err, userDB) {
+      User.findOne({ email: user.email }, function (err, userDB) {
         if (err) { return res.send(err); }
         if (!userDB) { return res.status(401).send({err: 'User not exist'}); }
         if (!authUtils.isValidPassword(userDB, user.password)) {
@@ -22,15 +22,27 @@ router.route('/login')
 
 router.route('/register')
     .post(function (req, res) {
-      var user = req.body.user;
-      var newUser = new User();
-      newUser.email = user.email;
-      newUser.password = authUtils.createHash(user.password);
+      var userInfo = req.body.user;
 
-      newUser.save(function (err, userDB) {
+      User.findOne({ UUID: UUID }, function (err, user) {
         if (err) { return res.send(err); }
+        if (user) {
+          User.update({ UUID: UUID }, function (err, userDb) {
+            if (err) { return res.send(err); }
 
-        res.json(userDB);
+            return res.send({ user: userDb, token: tokenUtils.createJWT(userDb._id) });
+          })
+        }
+
+        var newUser = new User();
+        newUser.email = userInfo.email;
+        newUser.password = authUtils.createHash(userInfo.password);
+
+        newUser.save(function (err, userDB) {
+          if (err) { return res.send(err); }
+
+          res.json(userDB);
+        });
       });
     });
 
@@ -43,6 +55,26 @@ router.route('/user')
 
         res.json(userDB);
       });
+    });
+
+router.route('/UUID/:UUID')
+    .get(function (req, res) {
+      var UUID = req.params.UUID;
+
+      User.findOne({ UUID: UUID }, function (err, user) {
+        if (err) { return res.send(err); }
+        if (!user) {
+          var newUser = new User();
+
+          newUser.save(function (err, userDB) {
+            if (err) { return res.send(err); }
+
+            return res.send({ user: userDB, token: tokenUtils.createJWT(userDB._id) });
+          });
+        }
+
+        return res.send({ user: user, token: tokenUtils.createJWT(user._id) });
+      })
     });
 
 module.exports = router;
