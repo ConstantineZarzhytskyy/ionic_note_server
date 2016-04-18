@@ -25,7 +25,7 @@ router.route('/')
       newNote.title = note.title;
       newNote.description = note.description;
       newNote.dateCreate = dateCreate.toUTCString();
-      newNote.dateNotification = note.dateNotification;
+      newNote.dateNotification = note.dateNotification.toUTCString();
       newNote.timeNotification = note.timeNotification;
 
       newNote.save(function (err) {
