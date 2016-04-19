@@ -10,7 +10,17 @@ router.route('/')
       Note.find({ userId: userId }, function (err, notes) {
         if (err) { return res.send(err); }
 
-        res.json(notes);
+        var result = [];
+        for(var i in notes) {
+          result.push({
+            title: notes[i].title,
+            description: notes[i].description,
+            done: notes[i].done,
+            folderId: notes[i].folderId
+          });
+        }
+
+        res.json(result);
       });
     })
     .post(function (req, res) {
