@@ -63,7 +63,7 @@ router.route('/UUID/:UUID')
 
       User.findOne({ UUID: UUID }, function (err, user) {
         if (err) { return res.send(err); }
-        if (user) {
+        if (!user) {
           var newUser = new User();
 
           newUser.save(function (err, userDB) {
@@ -71,9 +71,9 @@ router.route('/UUID/:UUID')
 
             return res.send({ user: userDB, token: tokenUtils.createJWT(userDB._id) });
           });
+        } else {
+          return res.send({ user: user, token: tokenUtils.createJWT(user._id) });
         }
-
-        return res.send({ user: user, token: tokenUtils.createJWT(user._id) });
       })
     });
 
