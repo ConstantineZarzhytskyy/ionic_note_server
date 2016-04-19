@@ -42,12 +42,9 @@ router.route('/')
       newNote.picture = note.picture;
 
       newNote.save(function (err, result) {
-        console.log('Save note');
-        console.log(err);
-        console.log(result);
         if (err) { return res.send(err); }
 
-        res.end(result);
+        res.json(result);
       });
     });
 
