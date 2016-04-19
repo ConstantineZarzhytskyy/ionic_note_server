@@ -41,10 +41,10 @@ router.route('/')
       newNote.timeNotification = note.timeNotification;
       newNote.picture = note.picture;
 
-      newNote.save(function (err) {
+      newNote.save(function (err, newNote) {
         if (err) { return res.send(err); }
 
-        res.end();
+        res.end(newNote);
       });
     });
 
