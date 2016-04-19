@@ -13,6 +13,7 @@ router.route('/')
         var result = [];
         for(var i in notes) {
           result.push({
+            _id: notes[i]._id,
             title: notes[i].title,
             description: notes[i].description,
             done: notes[i].done,
