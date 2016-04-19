@@ -7,7 +7,7 @@ var Note = configDb.Note;
 
 router.route('/')
     .get(function (req, res) {
-      var userId = req.user;
+      var user = req.user;
 
       async.waterfall([
         getFolders,
@@ -20,7 +20,7 @@ router.route('/')
       });
 
       function getFolders(done) {
-        Folder.find({ userId: userId }, function (err, folders) {
+        Folder.find({ $or: [ { "userId": user._id }, { "UUID": user.UUID } ] }, function (err, folders) {
           if (err) { return done(err, null); }
 
           done(null, folders);
@@ -28,7 +28,7 @@ router.route('/')
       }
 
       function getNotes(folders, done) {
-          Note.find({ userId: userId }, function (err, notes) {
+          Note.find({ $or: [ { "userId": user._id }, { "UUID": user.UUID } ] }, function (err, notes) {
             if (err) { return done(err, null); }
 
             done(null, { folders: folders, notes: notes });
@@ -53,10 +53,11 @@ router.route('/')
     })
     .post(function (req, res) {
       var folder = req.body.folder;
-      var userId = req.user;
+      var user = req.user;
 
       var newFolder = new Folder();
-      newFolder.userId = userId;
+      newFolder.userId = user._id;
+      newFolder.UUID = user.UUID;
       newFolder.title = folder.title;
 
       newFolder.save(function (err) {

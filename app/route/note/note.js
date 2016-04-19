@@ -5,9 +5,9 @@ var Note = configDb.Note;
 
 router.route('/')
     .get(function (req, res) {
-      var userId = req.user;
+      var user = req.user;
 
-      Note.find({ userId: userId }, function (err, notes) {
+      Note.find({ $or: [ { "userId": user._id }, { "UUID": user.UUID } ] }, function (err, notes) {
         if (err) { return res.send(err); }
 
         var result = [];
@@ -25,11 +25,12 @@ router.route('/')
     })
     .post(function (req, res) {
       var note = req.body.note;
-      var userId = req.user;
+      var user = req.user;
       var dateCreate = new Date();
 
       var newNote = new Note();
-      newNote.userId = userId;
+      newNote.userId = user._id;
+      newNote.UUID = user.UUID;
       newNote.folderId = note.folderId;
       newNote.markerId = note.markerId;
       newNote.title = note.title;

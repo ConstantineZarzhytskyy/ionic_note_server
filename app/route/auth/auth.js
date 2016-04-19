@@ -16,7 +16,7 @@ router.route('/login')
           return res.status(401).send({ err: 'invalid user' });
         }
 
-        res.send({ user: userDB, token: tokenUtils.createJWT(userDB._id) });
+        res.send({ user: userDB, token: tokenUtils.createJWT(userDB) });
       });
     });
 
@@ -30,7 +30,7 @@ router.route('/register')
           User.update({ UUID: UUID }, function (err, userDb) {
             if (err) { return res.send(err); }
 
-            return res.send({ user: userDb, token: tokenUtils.createJWT(userDb._id) });
+            return res.send({ user: userDb, token: tokenUtils.createJWT(userDb) });
           })
         }
 
@@ -70,10 +70,10 @@ router.route('/UUID/:UUID')
           newUser.save(function (err, userDB) {
             if (err) { return res.send(err); }
 
-            return res.send({ user: userDB, token: tokenUtils.createJWT(userDB._id) });
+            return res.send({ user: userDB, token: tokenUtils.createJWT(userDB) });
           });
         } else {
-          return res.send({ user: user, token: tokenUtils.createJWT(user._id) });
+          return res.send({ user: user, token: tokenUtils.createJWT(user) });
         }
       })
     });

@@ -5,9 +5,9 @@ var Marker = configDb.Marker;
 
 router.route('/')
     .get(function (req, res) {
-      var userId = req.user;
+      var user = req.user;
 
-      Marker.find({ userId: userId }, function (err, markers) {
+      Marker.find({ $or: [ { "userId": user._id }, { "UUID": user.UUID } ] }, function (err, markers) {
         if (err) { return res.send(err); }
 
         res.json(markers);
@@ -32,7 +32,7 @@ router.route('/')
 
 router.route('/:markerId')
     .put(function (req, res) {
-      var userId = req.user;
+      var user = req.user;
       var markerId = req.params.markerId;
       var newMarker = req.body.marker;
 
@@ -40,7 +40,8 @@ router.route('/:markerId')
           {
             $set: {
               title: newMarker.title,
-              userId: userId,
+              userId: user._id,
+              UUID: user.UUID,
               lat: newMarker.lat,
               lng: newMarker.lng
             }

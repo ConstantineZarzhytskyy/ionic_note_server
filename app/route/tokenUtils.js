@@ -2,9 +2,10 @@ var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var credentials = require('../app.config');
 
-function createJWT(userId) {
+function createJWT(user) {
   var payload = {
-    _id: userId,
+    _id: user._id,
+    UUID: user.UUID,
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   };
