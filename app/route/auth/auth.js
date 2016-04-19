@@ -65,6 +65,7 @@ router.route('/UUID/:UUID')
         if (err) { return res.send(err); }
         if (!user) {
           var newUser = new User();
+          newUser.UUID = UUID;
 
           newUser.save(function (err, userDB) {
             if (err) { return res.send(err); }
