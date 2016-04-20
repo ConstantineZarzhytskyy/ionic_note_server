@@ -31,6 +31,15 @@ router.route('/')
     });
 
 router.route('/:markerId')
+    .get(function (req, res) {
+      var markerId = req.params.markerId;
+
+      Marker.findOne({ _id: markerId }, function (err, marker) {
+        if (err) { return res.send(err); }
+
+        res.json(marker);
+      })
+    })
     .put(function (req, res) {
       var user = req.user;
       var markerId = req.params.markerId;
