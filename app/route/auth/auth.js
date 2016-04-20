@@ -11,9 +11,9 @@ router.route('/login')
 
       User.findOne({ email: user.email }, function (err, userDB) {
         if (err) { return res.send(err); }
-        if (!userDB) { return res.status(401).send({err: 'User not exist'}); }
+        if (!userDB) { return res.status(401).send({err: 'User with this credentials not found'}); }
         if (!authUtils.isValidPassword(userDB, user.password)) {
-          return res.status(401).send({ err: 'invalid user' });
+          return res.status(401).send({ err: 'User with this credentials not found' });
         }
 
         res.send({ user: userDB, token: tokenUtils.createJWT(userDB) });
