@@ -24,30 +24,14 @@ router.route('/register')
     .post(function (req, res) {
       var userInfo = req.body.user;
 
-      User.findOne({ UUID: userInfo.UUID }, function (err, user) {
+      var newUser = new User();
+      newUser.email = userInfo.email;
+      newUser.password = authUtils.createHash(userInfo.password);
+
+      newUser.save(function (err, userDB) {
         if (err) { return res.send(err); }
-        if (user) {
-          User.update({ UUID: userInfo.UUID }, {
-            $set: {
-              email: userInfo.email,
-              password: authUtils.createHash(userInfo.password)
-            }
-          }, function (err, userDb) {
-            if (err) { return res.send(err); }
 
-            return res.send({ user: userDb, token: tokenUtils.createJWT(userDb) });
-          })
-        } else {
-          var newUser = new User();
-          newUser.email = userInfo.email;
-          newUser.password = authUtils.createHash(userInfo.password);
-
-          newUser.save(function (err, userDB) {
-            if (err) { return res.send(err); }
-
-            return res.send({ user: userDB, token: tokenUtils.createJWT(userDB) });
-          });
-        }
+        return res.send({user: userDB, token: tokenUtils.createJWT(userDB)});
       });
     });
 
