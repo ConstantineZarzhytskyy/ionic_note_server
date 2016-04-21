@@ -23,6 +23,7 @@ router.route('/login')
 router.route('/register')
     .post(function (req, res) {
       var userToken = req.user;
+      console.log(userToken);
       var userInfo = req.body.user;
 
       User.findOne({ UUID: userToken.UUID }, function (err, user) {
