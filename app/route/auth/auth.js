@@ -38,7 +38,7 @@ router.route('/register')
 router.route('/user')
     .get(function (req, res) {
       var user = req.user;
-      if (user.isLogged) { return res.send({}); }
+      if (user.isLogged) { return res.end(); }
 
       User.findOne({ userId: user._id }, function (err, userDB) {
         if (err) { return res.send(err); }
