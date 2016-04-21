@@ -36,7 +36,7 @@ router.route('/')
       newNote.markerId = note.markerId;
       newNote.title = note.title;
       newNote.description = note.description;
-      newNote.dateCreate = dateCreate.getFullYear() + '-' + dateCreate.getMonth() + '-' + dateCreate.getData();
+      newNote.dateCreate = dateCreate.getFullYear() + '-' + dateCreate.getMonth() + '-' + dateCreate.getDate();
       newNote.dateNotification = note.dateNotification;
       newNote.timeNotification = note.timeNotification;
       newNote.picture = note.picture;
