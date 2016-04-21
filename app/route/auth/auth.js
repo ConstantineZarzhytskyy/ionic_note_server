@@ -46,7 +46,7 @@ router.route('/register')
           newUser.save(function (err, userDB) {
             if (err) { return res.send(err); }
 
-            return res.json(userDB);
+            return res.send({ user: userDB, token: tokenUtils.createJWT(userDB) });
           });
         }
       });
@@ -56,7 +56,7 @@ router.route('/user')
     .get(function (req, res) {
       var userId = req.user;
 
-      if (!user.isLogged) { return res.send({ isLogged: false }) }
+      if (user.isLogged) { return res.send({ isLogged: false }) }
 
       User.findOne({ userId: userId }, function (err, userDB) {
         if (err) { return res.send(err); }
