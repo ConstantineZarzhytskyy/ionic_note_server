@@ -22,14 +22,12 @@ router.route('/login')
 
 router.route('/register')
     .post(function (req, res) {
-      var userToken = req.user;
-      console.log(userToken);
       var userInfo = req.body.user;
 
-      User.findOne({ UUID: userToken.UUID }, function (err, user) {
+      User.findOne({ UUID: userInfo.UUID }, function (err, user) {
         if (err) { return res.send(err); }
         if (user) {
-          User.update({ UUID: userToken.UUID }, {
+          User.update({ UUID: userInfo.UUID }, {
             $set: {
               email: userInfo.email,
               password: authUtils.createHash(userInfo.password)
