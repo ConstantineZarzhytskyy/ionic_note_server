@@ -50,10 +50,12 @@ router.route('/user')
     .get(function (req, res) {
       var userId = req.user;
 
+      if (!user.isLogged) { return res.send({ isLogged: false }) }
+
       User.findOne({ userId: userId }, function (err, userDB) {
         if (err) { return res.send(err); }
 
-        res.json(userDB);
+        res.json({ isLogged: true, user: userDB });
       });
     });
 
@@ -70,7 +72,7 @@ router.route('/UUID/:UUID')
           newUser.save(function (err, userDB) {
             if (err) { return res.send(err); }
 
-            return res.send({ user: userDB, token: tokenUtils.createJWT(userDB) });
+            return res.send({ user: userDB, token: tokenUtils.createJWT(userDB, true) });
           });
         } else {
           return res.send({ user: user, token: tokenUtils.createJWT(user) });
