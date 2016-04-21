@@ -38,17 +38,17 @@ router.route('/register')
 
             return res.send({ user: userDb, token: tokenUtils.createJWT(userDb) });
           })
+        } else {
+          var newUser = new User();
+          newUser.email = userInfo.email;
+          newUser.password = authUtils.createHash(userInfo.password);
+
+          newUser.save(function (err, userDB) {
+            if (err) { return res.send(err); }
+
+            return res.json(userDB);
+          });
         }
-
-        var newUser = new User();
-        newUser.email = userInfo.email;
-        newUser.password = authUtils.createHash(userInfo.password);
-
-        newUser.save(function (err, userDB) {
-          if (err) { return res.send(err); }
-
-          res.json(userDB);
-        });
       });
     });
 
