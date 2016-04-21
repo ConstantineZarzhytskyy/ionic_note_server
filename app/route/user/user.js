@@ -9,6 +9,8 @@ router.route('/info')
       console.log(user);
 
       User.findOne({ userId: user._id }, function (err, userDB) {
+        console.log(err);
+        console.log(userDB);
         if (err) { return res.send(err); }
 
         res.json(userDB);
