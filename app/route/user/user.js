@@ -6,6 +6,7 @@ var User = configDb.User;
 router.route('/info')
     .get(function (req, res) {
       var user = req.user;
+      console.log(user);
 
       User.findOne({ userId: user._id }, function (err, userDB) {
         if (err) { return res.send(err); }
