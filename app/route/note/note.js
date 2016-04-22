@@ -39,6 +39,7 @@ router.route('/')
       newNote.dateCreate = dateCreate.getFullYear() + '-' + dateCreate.getMonth() + '-' + dateCreate.getDate();
       newNote.dateNotification = note.dateNotification;
       newNote.timeNotification = note.timeNotification;
+      newNote.intervalNotification = note.intervalNotification;
       newNote.picture = note.picture;
 
       newNote.save(function (err, result) {
@@ -72,7 +73,8 @@ router.route('/:noteId')
           folderId: newNote.folderId,
           markerId: newNote.markerId,
           dateNotification: newNote.dateNotification,
-          timeNotification: newNote.timeNotification
+          timeNotification: newNote.timeNotification,
+          intervalNotification: newNote.intervalNotification
         }
       }, function (err) {
         if (err) { return res.send(err); }

@@ -11,6 +11,7 @@ var NoteSchema = new Schema({
   done: { type: Boolean, default: false },
   dateNotification: String,
   timeNotification: String,
+  intervalNotification: String,
   picture: String
 });
 
