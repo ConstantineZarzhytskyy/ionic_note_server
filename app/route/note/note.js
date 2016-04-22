@@ -59,6 +59,24 @@ router.route('/:noteId')
         res.json(note);
       });
     })
+    .post(function (req, res) {
+      var noteId = req.params.noteId;
+      var newNote = req.body.note;
+
+      Note.update({
+        _id: noteId
+      }, {
+        $set: {
+          title: newNote.title,
+          done: newNote.done,
+          description: newNote.description
+        }
+      }, function (err) {
+        if (err) { return res.send(err); }
+
+        res.end();
+      });
+    })
     .put(function (req, res) {
       var noteId = req.params.noteId;
       var newNote = req.body.note;
